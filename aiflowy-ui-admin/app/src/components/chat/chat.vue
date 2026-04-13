@@ -575,10 +575,10 @@ function handlePasteFile(_: any, fileList: FileList) {
       <!--问题预设-->
       <div
         class="questions-preset-container"
-        v-if="botStore.presetQuestions.length > 0 && showQuestions"
+        v-if="botStore.getPresetQuestions(botId).length > 0 && showQuestions"
       >
         <ElButton
-          v-for="item in getPerQuestions(botStore.presetQuestions)"
+          v-for="item in getPerQuestions(botStore.getPresetQuestions(botId))"
           :key="item.key"
           @click="handleSubmit(item.description)"
         >

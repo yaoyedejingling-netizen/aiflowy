@@ -149,7 +149,10 @@ const getBotDetail = async () => {
           dialogueSettings.value = res.data.options;
         }
         if (res.data.options?.presetQuestions) {
-          botStore.setPresetQuestions(res.data?.options?.presetQuestions);
+          botStore.setPresetQuestions(
+            botId.value,
+            res.data?.options?.presetQuestions,
+          );
         }
       }
     });
@@ -373,7 +376,7 @@ const handleProblemPresuppositionSuccess = (data: any) => {
       if (res.errorCode === 0) {
         ElMessage.success($t('message.updateOkMessage'));
         getBotDetail();
-        botStore.setPresetQuestions(data);
+        botStore.setPresetQuestions(botId.value, data);
       } else {
         ElMessage.error(res.message);
       }
@@ -732,7 +735,9 @@ const formatSelectedMcpData = () => {
             </template>
             <div class="question-container">
               <div
-                v-for="item in getPerQuestions(botStore?.presetQuestions)"
+                v-for="item in getPerQuestions(
+                  botStore.getPresetQuestions(botId),
+                )"
                 :key="item.key"
               >
                 <div class="presetQues-container" v-if="item.description">

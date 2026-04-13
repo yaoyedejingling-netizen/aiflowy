@@ -9,7 +9,7 @@ export type PresetQuestionsType = {
 // 仅包含预设问题的状态接口
 interface BotStoreState {
   /** 预设问题列表 */
-  presetQuestions: PresetQuestionsType[];
+  presetQuestions: Map<string, PresetQuestionsType[]>;
 }
 
 /**
@@ -17,12 +17,18 @@ interface BotStoreState {
  */
 export const useBotStore = defineStore('bot-preset', {
   state: (): BotStoreState => ({
-    // 初始化空数组
-    presetQuestions: [],
+    // 初始化空 Map
+    presetQuestions: new Map(),
   }),
   actions: {
-    setPresetQuestions(questions: PresetQuestionsType[]) {
-      this.presetQuestions = questions;
+    getPresetQuestions(botId?: string): PresetQuestionsType[] {
+      if (botId) {
+        return this.presetQuestions.get(botId) ?? [];
+      }
+      return [];
+    },
+    setPresetQuestions(botId: string, questions: PresetQuestionsType[]) {
+      this.presetQuestions.set(botId, questions);
     },
   },
 });
