@@ -146,8 +146,9 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
         List<BigInteger> chunkIds = documentChunkMapper.selectListByQueryAs(queryWrapper, BigInteger.class);
         documentStore.delete(chunkIds, options);
         // 删除搜索引擎中的数据
-        if (searcherFactory.getSearcher((String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE)) != null) {
-            DocumentSearcher searcher = searcherFactory.getSearcher((String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE));
+        String searchEngineType = (String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE);
+        DocumentSearcher searcher = searcherFactory.getSearcher(searchEngineType, knowledge.getId());
+        if (searcher != null) {
             chunkIds.forEach(searcher::deleteDocument);
         }
         int ck = documentChunkMapper.deleteByQuery(QueryWrapper.create().eq(DocumentChunk::getDocumentId, id));
@@ -312,10 +313,12 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
             }
         }
 
-        // 获取搜索引擎
-        DocumentSearcher searcher = searcherFactory.getSearcher((String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE));
+        // 获取搜索引擎（传入知识库ID以使用独立的索引目录）
+        DocumentSearcher searcher = searcherFactory.getSearcher((String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE), knowledge.getId());
         // 添加到搜索引擎
-        documents.forEach(searcher::addDocument);
+        if (searcher != null) {
+            documents.forEach(searcher::addDocument);
+        }
 
         DocumentCollection documentCollection = new DocumentCollection();
         documentCollection.setId(entity.getCollectionId());

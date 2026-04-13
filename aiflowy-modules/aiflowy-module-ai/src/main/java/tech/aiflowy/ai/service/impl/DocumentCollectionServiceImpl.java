@@ -107,7 +107,9 @@ public class DocumentCollectionServiceImpl extends ServiceImpl<DocumentCollectio
         );
 
         CompletableFuture<List<Document>> searcherFuture = CompletableFuture.supplyAsync(() -> {
-            DocumentSearcher searcher = searcherFactory.getSearcher((String) documentCollection.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE));
+            DocumentSearcher searcher = searcherFactory.getSearcher(
+                    (String) documentCollection.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE),
+                    documentCollection.getId());
             if (searcher == null) {
                 return Collections.emptyList();
             }
@@ -282,8 +284,16 @@ public class DocumentCollectionServiceImpl extends ServiceImpl<DocumentCollectio
                 // 删除向量数据库中的数据
                 documentStore.delete(stringDocIds, options);
             }
-            DocumentSearcher searcher = searcherFactory.getSearcher((String) documentCollection.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE));
-            chunkIds.forEach(searcher::deleteDocument);
+            // 删除搜索引擎中的数据 - 直接删除整个知识库目录
+            String searchEngineType = (String) documentCollection.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE);
+            if ("lucene".equals(searchEngineType)) {
+                searcherFactory.deleteCollectionIndex(documentCollectionId);
+            } else {
+                DocumentSearcher searcher = searcherFactory.getSearcher(searchEngineType);
+                if (searcher != null) {
+                    chunkIds.forEach(searcher::deleteDocument);
+                }
+            }
             // 删除数据库中的文档块数据
             documentChunkMapper.deleteBatchByIds(chunkIds);
             QueryWrapper documentQueryWrapper = QueryWrapper.create().eq(tech.aiflowy.ai.entity.Document::getCollectionId, documentCollectionId);

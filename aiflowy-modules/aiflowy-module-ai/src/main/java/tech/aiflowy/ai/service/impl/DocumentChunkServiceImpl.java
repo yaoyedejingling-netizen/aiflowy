@@ -29,11 +29,11 @@ public class DocumentChunkServiceImpl extends ServiceImpl<DocumentChunkMapper, D
     @Override
     public boolean removeChunk(DocumentCollection knowledge, BigInteger chunkId) {
         String searchEngineType = (String) knowledge.getOptionsByKey(KEY_SEARCH_ENGINE_TYPE);
-        DocumentSearcher searcher = searcherFactory.getSearcher(searchEngineType);
+        DocumentSearcher searcher = searcherFactory.getSearcher(searchEngineType, knowledge.getId());
         // 删除搜索引擎中的数据
-        if (searcherFactory.getSearcher(searchEngineType) == null){
+        if (searcher == null) {
             return true;
         }
-        return  searcher.deleteDocument(chunkId);
+        return searcher.deleteDocument(chunkId);
     }
 }
