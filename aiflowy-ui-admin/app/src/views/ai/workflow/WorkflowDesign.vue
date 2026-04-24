@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { preferences } from '@aiflowy/preferences';
 import { getOptions, sortNodes } from '@aiflowy/utils';
 
 import { ArrowLeft, Position } from '@element-plus/icons-vue';
@@ -200,6 +201,16 @@ function handlePluginNodeUpdate(chooseId: any) {
 function onAsyncExecute(info: any) {
   chainInfo.value = info;
 }
+
+watchEffect(() => {
+  if (tinyflowRef.value && preferences.theme.mode) {
+    tinyflowRef.value
+      .getInstance()
+      ?.setTheme(
+        preferences.theme.mode === 'auto' ? 'system' : preferences.theme.mode,
+      );
+  }
+});
 </script>
 
 <template>
