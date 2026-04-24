@@ -66,6 +66,9 @@ catalogs:
     '@tanstack/vue-store':
       specifier: ^0.7.1
       version: 0.7.7
+    '@tinyflow-ai/vue':
+      specifier: ^1.3.1
+      version: 1.3.1
     '@types/archiver':
       specifier: ^6.0.3
       version: 6.0.4
@@ -638,8 +641,8 @@ importers:
         specifier: ^2.3.2
         version: 2.3.2(vue@3.5.24(typescript@5.9.3))
       '@tinyflow-ai/vue':
-        specifier: ^1.2.2
-        version: 1.2.2(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))
+        specifier: 'catalog:'
+        version: 1.3.1(@internationalized/date@3.10.0)(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))
       '@vueuse/core':
         specifier: 'catalog:'
         version: 13.9.0(vue@3.5.24(typescript@5.9.3))
@@ -3878,11 +3881,11 @@ packages:
     peerDependencies:
       vue: ^3.5.17
 
-  '@tinyflow-ai/ui@1.2.2':
-    resolution: {integrity: sha512-SwKucKqoR5A3CMyTk/KWK+c33d2D8uhyDtKhl61Wj/LAWuJdaxtZiUqQN+tjGGH0QqwgtgpuYK7h4UYWlUhqoQ==}
+  '@tinyflow-ai/ui@1.3.1':
+    resolution: {integrity: sha512-9CtYgSdut+VTCVkrGEYWiSQ2qDzLDpupWlYOQkM1tgrTTiGxk8QCmPQ0tBa/UssqrJpbEl0/OQCY1VYRAuzdmA==}
 
-  '@tinyflow-ai/vue@1.2.2':
-    resolution: {integrity: sha512-e+zkeyOrSu/sO2s0kBkQI46jMJjP0D1USswMJrlaOX6+uBujQhaZt5wLkKO8VKGiTsRaPY9PF79ecLUmiP+IRQ==}
+  '@tinyflow-ai/vue@1.3.1':
+    resolution: {integrity: sha512-FVC5883g9ukE/r/WI6XzH0G7yDVCKqRc9gZNYRYm/vtkVwX0nCCFFE3nfK4T9OefLVJiLmvVp8U/0jQhVtgSHQ==}
     peerDependencies:
       vue: ^3.5.17
 
@@ -4738,6 +4741,13 @@ packages:
 
   birpc@2.7.0:
     resolution: {integrity: sha512-tub/wFGH49vNCm0xraykcY3TcRgX/3JsALYq/Lwrtti+bTyFHkCUAWF5wgYoie8P41wYwig2mIKiqoocr1EkEQ==}
+
+  bits-ui@2.18.0:
+    resolution: {integrity: sha512-GLOBZRVy3hxNHIQ2MpD/+5aK9KcBFZRhUJtZ1UDABXdlVR4K6zFpgt4T+Rwuhf2sQzlc6yK1q/DprHPjwT4Pjw==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      '@internationalized/date': ^3.8.1
+      svelte: ^5.33.0
 
   boolbase@1.0.0:
     resolution: {integrity: sha512-JZOSA7Mo9sNGB8+UjSgzdLtokWAky1zbztM3WRLCbZ70/3cTANmQmOdR7y2g+J0e2WXywy1yS468tY+IruqEww==}
@@ -6584,6 +6594,9 @@ packages:
     resolution: {integrity: sha512-QQnnxNyfvmHFIsj7gkPcYymR8Jdw/o7mp5ZFihxn6h8Ci6fh3Dx4E1gPjpQEpIuPo9XVNY/ZUwh4BPMjGyL01g==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
+  inline-style-parser@0.2.7:
+    resolution: {integrity: sha512-Nb2ctOyNR8DqQoR0OwRG95uNWIC0C1lCgf5Naz5H6Ji72KZ8OcFZLz2P5sNgwlyoJ8Yif11oMuYs5pBQa86csA==}
+
   internal-slot@1.1.0:
     resolution: {integrity: sha512-4gd7VpWNQNB4UKKCFFVcp1AVv+FMOgs9NKzjHKusc8jTMhd5eL1NqQqOpE0KzMds804/yHlglp3uxgluOqAPLw==}
     engines: {node: '>= 0.4'}
@@ -7519,6 +7532,11 @@ packages:
 
   mlly@1.8.0:
     resolution: {integrity: sha512-l8D9ODSRWLe2KHJSifWGwBqpTZXIXTeo8mlKjY+E2HAakaTeNpqAyBZ8GSqLzHgw4XmHmC8whvpjJNMbFZN7/g==}
+
+  mode-watcher@1.1.0:
+    resolution: {integrity: sha512-mUT9RRGPDYenk59qJauN1rhsIMKBmWA3xMF+uRwE8MW/tjhaDSCCARqkSuDTq8vr4/2KcAxIGVjACxTjdk5C3g==}
+    peerDependencies:
+      svelte: ^5.27.0
 
   mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
@@ -8834,6 +8852,25 @@ packages:
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
 
+  runed@0.23.4:
+    resolution: {integrity: sha512-9q8oUiBYeXIDLWNK5DfCWlkL0EW3oGbk845VdKlPeia28l751VpfesaB/+7pI6rnbx1I6rqoZ2fZxptOJLxILA==}
+    peerDependencies:
+      svelte: ^5.7.0
+
+  runed@0.25.0:
+    resolution: {integrity: sha512-7+ma4AG9FT2sWQEA0Egf6mb7PBT2vHyuHail1ie8ropfSjvZGtEAx8YTmUjv/APCsdRRxEVvArNjALk9zFSOrg==}
+    peerDependencies:
+      svelte: ^5.7.0
+
+  runed@0.35.1:
+    resolution: {integrity: sha512-2F4Q/FZzbeJTFdIS/PuOoPRSm92sA2LhzTnv6FXhCoENb3huf5+fDuNOg1LNvGOouy3u/225qxmuJvcV3IZK5Q==}
+    peerDependencies:
+      '@sveltejs/kit': ^2.21.0
+      svelte: ^5.7.0
+    peerDependenciesMeta:
+      '@sveltejs/kit':
+        optional: true
+
   sade@1.8.1:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
     engines: {node: '>=6'}
@@ -9188,6 +9225,9 @@ packages:
   style-search@0.1.0:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
 
+  style-to-object@1.0.14:
+    resolution: {integrity: sha512-LIN7rULI0jBscWQYaSswptyderlarFkjQ+t79nzty8tcIAceVomEVlLzH5VP4Cmsv6MtKhs7qaAiwlcp+Mgaxw==}
+
   style-value-types@5.1.2:
     resolution: {integrity: sha512-Vs9fNreYF9j6W2VvuDTP7kepALi7sk0xtk2Tu8Yxi9UoajJdEVpNpCov0HsLTqXvNGKX+Uv09pkozVITi1jf3Q==}
 
@@ -9307,6 +9347,18 @@ packages:
   supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  svelte-toolbelt@0.10.6:
+    resolution: {integrity: sha512-YWuX+RE+CnWYx09yseAe4ZVMM7e7GRFZM6OYWpBKOb++s+SQ8RBIMMe+Bs/CznBMc0QPLjr+vDBxTAkozXsFXQ==}
+    engines: {node: '>=18', pnpm: '>=8.7.0'}
+    peerDependencies:
+      svelte: ^5.30.2
+
+  svelte-toolbelt@0.7.1:
+    resolution: {integrity: sha512-HcBOcR17Vx9bjaOceUvxkY3nGmbBmCBBbuWLLEWO6jtmWH8f/QoWmbyUfQZrpDINH39en1b8mptfPQT9VKQ1xQ==}
+    engines: {node: '>=18', pnpm: '>=8.7.0'}
+    peerDependencies:
+      svelte: ^5.0.0
 
   svelte@5.44.0:
     resolution: {integrity: sha512-R7387No2zEGw4CtYtI2rgsui6BqjFARzoZFGLiLN5OPla0Pq4Ra2WwcP/zBomP3MYalhSNvF1fzDMuU0P0zPJw==}
@@ -10058,6 +10110,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@3.0.0:
     resolution: {integrity: sha512-nt+N2dzIutVRxARx1nghPKGv1xHikU7HKdfafKkLNLindmPU/ch3U31NOCGGA/dmPcmb1VlofO0vnKAcsm0o/Q==}
@@ -12825,18 +12878,24 @@ snapshots:
       '@tanstack/virtual-core': 3.13.12
       vue: 3.5.24(typescript@5.9.3)
 
-  '@tinyflow-ai/ui@1.2.2(svelte@5.44.0)':
+  '@tinyflow-ai/ui@1.3.1(@internationalized/date@3.10.0)(svelte@5.44.0)':
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@xyflow/svelte': 1.4.2(svelte@5.44.0)
+      bits-ui: 2.18.0(@internationalized/date@3.10.0)(svelte@5.44.0)
+      mode-watcher: 1.1.0(svelte@5.44.0)
     transitivePeerDependencies:
+      - '@internationalized/date'
+      - '@sveltejs/kit'
       - svelte
 
-  '@tinyflow-ai/vue@1.2.2(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))':
+  '@tinyflow-ai/vue@1.3.1(@internationalized/date@3.10.0)(svelte@5.44.0)(vue@3.5.24(typescript@5.9.3))':
     dependencies:
-      '@tinyflow-ai/ui': 1.2.2(svelte@5.44.0)
+      '@tinyflow-ai/ui': 1.3.1(@internationalized/date@3.10.0)(svelte@5.44.0)
       vue: 3.5.24(typescript@5.9.3)
     transitivePeerDependencies:
+      - '@internationalized/date'
+      - '@sveltejs/kit'
       - svelte
 
   '@tybys/wasm-util@0.10.1':
@@ -13788,6 +13847,19 @@ snapshots:
   bintrees@1.0.2: {}
 
   birpc@2.7.0: {}
+
+  bits-ui@2.18.0(@internationalized/date@3.10.0)(svelte@5.44.0):
+    dependencies:
+      '@floating-ui/core': 1.7.3
+      '@floating-ui/dom': 1.7.4
+      '@internationalized/date': 3.10.0
+      esm-env: 1.2.2
+      runed: 0.35.1(svelte@5.44.0)
+      svelte: 5.44.0
+      svelte-toolbelt: 0.10.6(svelte@5.44.0)
+      tabbable: 6.3.0
+    transitivePeerDependencies:
+      - '@sveltejs/kit'
 
   boolbase@1.0.0: {}
 
@@ -15934,6 +16006,8 @@ snapshots:
 
   ini@4.1.1: {}
 
+  inline-style-parser@0.2.7: {}
+
   internal-slot@1.1.0:
     dependencies:
       es-errors: 1.3.0
@@ -16998,6 +17072,12 @@ snapshots:
       pathe: 2.0.3
       pkg-types: 1.3.1
       ufo: 1.6.1
+
+  mode-watcher@1.1.0(svelte@5.44.0):
+    dependencies:
+      runed: 0.25.0(svelte@5.44.0)
+      svelte: 5.44.0
+      svelte-toolbelt: 0.7.1(svelte@5.44.0)
 
   mri@1.2.0: {}
 
@@ -18398,6 +18478,23 @@ snapshots:
     dependencies:
       queue-microtask: 1.2.3
 
+  runed@0.23.4(svelte@5.44.0):
+    dependencies:
+      esm-env: 1.2.2
+      svelte: 5.44.0
+
+  runed@0.25.0(svelte@5.44.0):
+    dependencies:
+      esm-env: 1.2.2
+      svelte: 5.44.0
+
+  runed@0.35.1(svelte@5.44.0):
+    dependencies:
+      dequal: 2.0.3
+      esm-env: 1.2.2
+      lz-string: 1.5.0
+      svelte: 5.44.0
+
   sade@1.8.1:
     dependencies:
       mri: 1.2.0
@@ -18795,6 +18892,10 @@ snapshots:
 
   style-search@0.1.0: {}
 
+  style-to-object@1.0.14:
+    dependencies:
+      inline-style-parser: 0.2.7
+
   style-value-types@5.1.2:
     dependencies:
       hey-listen: 1.0.8
@@ -18955,6 +19056,22 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
+  svelte-toolbelt@0.10.6(svelte@5.44.0):
+    dependencies:
+      clsx: 2.1.1
+      runed: 0.35.1(svelte@5.44.0)
+      style-to-object: 1.0.14
+      svelte: 5.44.0
+    transitivePeerDependencies:
+      - '@sveltejs/kit'
+
+  svelte-toolbelt@0.7.1(svelte@5.44.0):
+    dependencies:
+      clsx: 2.1.1
+      runed: 0.23.4(svelte@5.44.0)
+      style-to-object: 1.0.14
+      svelte: 5.44.0
+
   svelte@5.44.0:
     dependencies:
       '@jridgewell/remapping': 2.3.5
@@ -18999,8 +19116,7 @@ snapshots:
 
   system-architecture@0.1.0: {}
 
-  tabbable@6.3.0:
-    optional: true
+  tabbable@6.3.0: {}
 
   table@6.9.0:
     dependencies:
