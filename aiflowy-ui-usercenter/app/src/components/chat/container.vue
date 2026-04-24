@@ -15,7 +15,6 @@ import {
   ElDropdownMenu,
   ElForm,
   ElFormItem,
-  ElHeader,
   ElInput,
   ElMain,
   ElMessage,
@@ -37,6 +36,13 @@ const sessionList = ref<any>([]);
 const currentSession = ref<any>({});
 const hoverId = ref<string>();
 const dialogVisible = ref(false);
+
+// 左侧栏独立显示状态
+const showSessionList = ref(true);
+const toggleSessionList = () => {
+  showSessionList.value = !showSessionList.value;
+};
+
 watch(
   () => props.bot.id,
   () => {
@@ -183,97 +189,103 @@ function remove(row: any) {
 
 <template>
   <ElContainer class="border-border bg-background h-full rounded-lg border">
-    <ElAside width="287px" class="border-border border-r p-6">
-      <!-- <Card class="max-w-max p-0">
-        <CardAvatar :src="bot.icon" :default-avatar="defaultAssistantAvatar" />
-        <CardContent>
-          <CardTitle>{{ bot.title }}</CardTitle>
-          <CardDescription>{{ bot.description }}</CardDescription>
-        </CardContent>
-      </Card> -->
-      <span>会话</span>
-      <ElButton
-        class="mt-6 !h-10 w-full !text-sm"
-        type="primary"
-        :icon="ChatIcon"
-        plain
-        @click="addSession"
+    <transition name="collapse-menu-left">
+      <ElAside
+        v-if="showSessionList"
+        width="287px"
+        class="border-border flex flex-col border-r p-5 pb-2"
       >
-        新建会话
-      </ElButton>
-      <div class="mt-8">
-        <div
-          v-for="conversation in sessionList"
-          :key="conversation.id"
-          :class="
-            cn(
-              'group flex h-10 cursor-pointer items-center justify-between gap-1 rounded-lg px-5 text-sm',
-              currentSession.id === conversation.id
-                ? 'bg-[hsl(var(--primary)/15%)] dark:bg-[hsl(var(--accent))]'
-                : 'hover:bg-[hsl(var(--accent))]',
-            )
-          "
-          @click="clickSession(conversation)"
-        >
-          <span
-            :class="
-              cn(
-                'text-foreground overflow-hidden text-ellipsis text-nowrap',
-                currentSession.id === conversation.id && 'text-primary',
-              )
-            "
-            :title="conversation.title || '未命名'"
-          >
-            {{ conversation.title || '未命名' }}
-          </span>
-          <span
-            :class="
-              cn(
-                'text-foreground/50 text-nowrap text-xs group-hover:hidden',
-                hoverId === conversation.id && 'hidden',
-              )
-            "
-          >
-            {{ formatCreatedTime(conversation.created) }}
-          </span>
-          <ElDropdown
-            :class="
-              cn(
-                'group-hover:!inline-flex',
-                (!hoverId || conversation.id !== hoverId) && '!hidden',
-              )
-            "
-            @click.stop
-            trigger="click"
-          >
-            <ElButton link :icon="MoreFilled" @click.stop />
-
-            <template #dropdown>
-              <ElDropdownMenu
-                @mouseenter="handleMouseEvent(conversation.id)"
-                @mouseleave="handleMouseEvent()"
-              >
-                <ElDropdownItem @click="dialogVisible = true">
-                  <ElButton link :icon="Edit">编辑</ElButton>
-                </ElDropdownItem>
-                <ElDropdownItem>
-                  <ElButton
-                    @click="remove(conversation)"
-                    link
-                    type="danger"
-                    :icon="Delete"
-                  >
-                    删除
-                  </ElButton>
-                </ElDropdownItem>
-              </ElDropdownMenu>
-            </template>
-          </ElDropdown>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium">会话</span>
+          <IconifyIcon
+            icon="svg:assistant-fold"
+            class="cursor-pointer"
+            @click="toggleSessionList"
+          />
         </div>
-      </div>
-    </ElAside>
-    <ElContainer>
-      <ElHeader class="border-border border-b" height="53">
+        <ElButton
+          class="mt-6 !h-10 w-full !text-sm"
+          type="primary"
+          :icon="ChatIcon"
+          plain
+          @click="addSession"
+        >
+          新建会话
+        </ElButton>
+        <div class="mt-5 max-h-[calc(100%-98px)] overflow-auto">
+          <div
+            v-for="conversation in sessionList"
+            :key="conversation.id"
+            :class="
+              cn(
+                'group flex h-10 cursor-pointer items-center justify-between gap-1 rounded-lg px-5 text-sm',
+                currentSession.id === conversation.id
+                  ? 'bg-[hsl(var(--primary)/15%)] dark:bg-[hsl(var(--accent))]'
+                  : 'hover:bg-[hsl(var(--accent))]',
+              )
+            "
+            @click="clickSession(conversation)"
+          >
+            <span
+              :class="
+                cn(
+                  'text-foreground overflow-hidden text-ellipsis text-nowrap',
+                  currentSession.id === conversation.id && 'text-primary',
+                )
+              "
+              :title="conversation.title || '未命名'"
+            >
+              {{ conversation.title || '未命名' }}
+            </span>
+            <span
+              :class="
+                cn(
+                  'text-foreground/50 text-nowrap text-xs group-hover:hidden',
+                  hoverId === conversation.id && 'hidden',
+                )
+              "
+            >
+              {{ formatCreatedTime(conversation.created) }}
+            </span>
+            <ElDropdown
+              :class="
+                cn(
+                  'group-hover:!inline-flex',
+                  (!hoverId || conversation.id !== hoverId) && '!hidden',
+                )
+              "
+              @click.stop
+              trigger="click"
+            >
+              <ElButton link :icon="MoreFilled" @click.stop />
+
+              <template #dropdown>
+                <ElDropdownMenu
+                  @mouseenter="handleMouseEvent(conversation.id)"
+                  @mouseleave="handleMouseEvent()"
+                >
+                  <ElDropdownItem @click="dialogVisible = true">
+                    <ElButton link :icon="Edit">编辑</ElButton>
+                  </ElDropdownItem>
+                  <ElDropdownItem>
+                    <ElButton
+                      @click="remove(conversation)"
+                      link
+                      type="danger"
+                      :icon="Delete"
+                    >
+                      删除
+                    </ElButton>
+                  </ElDropdownItem>
+                </ElDropdownMenu>
+              </template>
+            </ElDropdown>
+          </div>
+        </div>
+      </ElAside>
+    </transition>
+    <ElContainer class="relative">
+      <!-- <ElHeader class="border-border border-b" height="53">
         <div class="flex items-center justify-between">
           <span class="text-base/[53px] font-medium">
             {{ currentSession.title || '未命名' }}
@@ -285,7 +297,29 @@ function remove(row: any) {
             @click="toggleFold"
           />
         </div>
-      </ElHeader>
+      </ElHeader> -->
+      <div
+        v-if="!showSessionList || isFold"
+        :class="
+          cn(
+            'absolute left-0 right-0 top-0 box-content flex h-6 items-center justify-between px-5 pt-5',
+            showSessionList && isFold && 'justify-end',
+          )
+        "
+      >
+        <IconifyIcon
+          v-if="!showSessionList"
+          icon="svg:assistant-fold"
+          class="rotate-180 cursor-pointer"
+          @click="toggleSessionList"
+        />
+        <IconifyIcon
+          v-if="isFold"
+          icon="svg:assistant-fold"
+          class="cursor-pointer"
+          @click="toggleFold"
+        />
+      </div>
       <ElMain>
         <slot :conversation-id="currentSession.id"></slot>
       </ElMain>
@@ -315,5 +349,20 @@ function remove(row: any) {
 <style lang="css" scoped>
 .el-button :deep(.el-icon) {
   font-size: 20px;
+}
+
+/* 左侧栏收缩/展开过渡动画 */
+.collapse-menu-left-enter-active,
+.collapse-menu-left-leave-active {
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.collapse-menu-left-enter-from,
+.collapse-menu-left-leave-to {
+  width: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  opacity: 0;
 }
 </style>

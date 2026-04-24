@@ -16,6 +16,7 @@ import ShowJson from '#/components/json/ShowJson.vue';
 interface Props {
   bot: any;
   messages: any[];
+  maxHeight?: string;
 }
 const props = defineProps<Props>();
 const store = useUserStore();
@@ -38,7 +39,7 @@ defineExpose({ scrollBottom });
   <ElBubbleList
     ref="bubbleListRef"
     :list="messages"
-    max-height="calc(100vh - 345px)"
+    :max-height="maxHeight || 'calc(100% - 180px)'"
   >
     <!-- 自定义头像 -->
     <template #avatar="{ item }">
