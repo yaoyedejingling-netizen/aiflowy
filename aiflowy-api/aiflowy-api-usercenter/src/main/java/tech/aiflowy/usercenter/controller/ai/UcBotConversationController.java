@@ -86,6 +86,7 @@ public class UcBotConversationController extends BaseCurdController<BotConversat
         }
 
         QueryWrapper queryWrapper = buildQueryWrapper(request);
+        queryWrapper.eq(BotConversation::getAccountId, SaTokenUtil.getLoginAccount().getId());
         queryWrapper.orderBy(buildOrderBy(sortKey, sortType, getDefaultOrderBy()));
         Page<BotConversation> botConversationPage = service.getMapper().paginateWithRelations(pageNumber, pageSize, queryWrapper);
         return Result.ok(botConversationPage);
@@ -102,6 +103,12 @@ public class UcBotConversationController extends BaseCurdController<BotConversat
     public Result<BotConversation> detail(String id) {
         if (tech.aiflowy.common.util.StringUtil.noText(id)) {
             throw new BusinessException("id must not be null");
+        }
+        QueryWrapper queryWrapper = QueryWrapper.create()
+                .eq(BotConversation::getId, id)
+                .eq(BotConversation::getAccountId, SaTokenUtil.getLoginAccount().getId());
+        if (service.getOne(queryWrapper) == null) {
+            return Result.ok(null);
         }
         return Result.ok(service.getMapper().selectOneWithRelationsById(id));
     }
