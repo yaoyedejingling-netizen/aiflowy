@@ -11,6 +11,7 @@ import com.agentsflex.core.store.VectorData;
 import com.alicp.jetcache.Cache;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,10 @@ import tech.aiflowy.ai.entity.ModelProvider;
 import tech.aiflowy.ai.mapper.ModelMapper;
 import tech.aiflowy.ai.service.ModelProviderService;
 import tech.aiflowy.ai.service.ModelService;
-import tech.aiflowy.common.domain.Result;
 import tech.aiflowy.common.web.exceptions.BusinessException;
 import tech.aiflowy.system.entity.SysOption;
 import tech.aiflowy.system.service.SysOptionService;
 
-import jakarta.annotation.Resource;
 import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -161,9 +160,9 @@ public class ModelServiceImpl extends ServiceImpl<ModelMapper, Model> implements
             throw new BusinessException("chatModel为空");
         }
         try {
-            ChatOptions options=new ChatOptions();
+            ChatOptions options = new ChatOptions();
             options.setThinkingEnabled(false);
-            String response = chatModel.chat("我在对模型配置进行校验，你收到这条消息无需做任何思考，直接回复一个“你好”即可!",options);
+            String response = chatModel.chat("我在对模型配置进行校验，你收到这条消息无需做任何思考，直接回复一个“你好”即可!", options);
             if (response == null) {
                 throw new BusinessException("校验未通过，请前往后端日志查看详情！");
             }
@@ -232,6 +231,13 @@ public class ModelServiceImpl extends ServiceImpl<ModelMapper, Model> implements
         SysOption requestPath = sysOptionService.getByOptionKey("chatgpt_chatPath");
         SysOption endpoint = sysOptionService.getByOptionKey("chatgpt_endpoint");
         SysOption apiKey = sysOptionService.getByOptionKey("chatgpt_api_key");
+        if (modelProviderName == null
+                || modelName == null
+                || requestPath == null
+                || endpoint == null
+                || apiKey == null) {
+            throw new BusinessException("系统模型配置不完善，请检查系统模型配置！");
+        }
         ModelProvider modelProvider = new ModelProvider();
         modelProvider.setProviderType(modelProviderName.getValue());
         Model model = new Model();
