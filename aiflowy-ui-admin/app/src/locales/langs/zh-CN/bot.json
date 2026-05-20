@@ -27,5 +27,20 @@
   "Running": "工具调用中",
   "Completed": "调用成功",
   "Parameters": "参数",
-  "Result": "结果"
+  "Result": "结果",
+  "copiedToClipboard": "已复制到剪贴板",
+  "publishToUserCenter": "发布到用户中心",
+  "isPublished": "是否发布",
+  "openUserCenter": "在用户中心打开",
+  "iframeEmbedding": "使用iframe嵌入",
+  "iframeEmbeddingTooltip": "通过 iframe 将智能体对话页面嵌入到你的网站或应用中",
+  "baseEmbeddingCode": "基础嵌入代码",
+  "copyCode": "复制代码",
+  "fullEmbeddingCode": "完整示例",
+  "sdkEmbedding": "使用SDK嵌入",
+  "sdkEmbeddingTooltip": "通过引入SDK脚本，在页面右下角显示悬浮按钮，点击弹出对话窗口",
+  "sdkEmbeddingCode": "SDK嵌入代码",
+  "apiEmbedding": "使用API接入",
+  "apiEmbeddingTooltip": "通过 API 将智能体对话能力集成到你的应用或服务中",
+  "viewApiDoc": "查看API文档"
 }

@@ -29,6 +29,7 @@ export interface CardListProps {
   titleField?: string;
   descField?: string;
   actions?: ActionButton[];
+  showActionsLen?: number;
   defaultIcon: any;
   data: any[];
 }
@@ -37,6 +38,7 @@ const props = withDefaults(defineProps<CardListProps>(), {
   titleField: 'title',
   descField: 'description',
   actions: () => [],
+  showActionsLen: 3,
 });
 const { hasAccessByCodes } = useAccess();
 const filterActions = computed(() => {
@@ -45,12 +47,14 @@ const filterActions = computed(() => {
   });
 });
 const visibleActions = computed(() => {
-  return filterActions.value.length <= 3
+  return filterActions.value.length <= props.showActionsLen
     ? filterActions.value
-    : filterActions.value.slice(0, 3);
+    : filterActions.value.slice(0, props.showActionsLen);
 });
 const hiddenActions = computed(() => {
-  return filterActions.value.length > 3 ? filterActions.value.slice(3) : [];
+  return filterActions.value.length > props.showActionsLen
+    ? filterActions.value.slice(props.showActionsLen)
+    : [];
 });
 </script>
 
@@ -81,7 +85,11 @@ const hiddenActions = computed(() => {
         </ElText>
       </div>
       <template #footer>
-        <div :class="visibleActions.length > 2 ? 'footer-div' : ''">
+        <div
+          :class="
+            visibleActions.length > props.showActionsLen - 1 ? 'footer-div' : ''
+          "
+        >
           <template v-for="(action, idx) in visibleActions" :key="idx">
             <ElButton
               :icon="typeof action.icon === 'string' ? undefined : action.icon"
@@ -100,7 +108,7 @@ const hiddenActions = computed(() => {
             </ElButton>
             <ElDivider
               v-if="
-                filterActions.length <= 3
+                filterActions.length <= props.showActionsLen
                   ? idx < filterActions.length - 1
                   : true
               "

@@ -44,8 +44,8 @@ const loading = ref(false);
 const handleSubmit = async () => {
   loading.value = true;
 
-  const [err, res] = await tryit(
-    dialogType.value === 'create' ? saveBot : updateBotApi,
+  const [err, res] = await (
+    dialogType.value === 'create' ? tryit(saveBot) : tryit(updateBotApi)
   )(formData.value as any);
 
   if (!err && res.errorCode === 0) {

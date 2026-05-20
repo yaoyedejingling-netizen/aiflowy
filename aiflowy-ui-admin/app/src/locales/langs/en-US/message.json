@@ -45,5 +45,6 @@
   "notAudio": "Your browser does not support the audio element.",
   "selectTip": "Please select",
   "mustBeNumber": "Please enter a valid number",
-  "confirmItem": "Confirm Item"
+  "confirmItem": "Confirm Item",
+  "userCenterDomainNotSet": "User center domain not set"
 }

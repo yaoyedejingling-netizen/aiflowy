@@ -27,5 +27,20 @@
   "Completed": "Completed",
   "chatAssistant": "Bots",
   "Parameters": "Parameters",
-  "Result": "Result"
+  "Result": "Result",
+  "copiedToClipboard": "Copied to clipboard",
+  "publishToUserCenter": "Publish to user center",
+  "isPublished": "Is published",
+  "openUserCenter": "Open in user center",
+  "iframeEmbedding": "Use iframe embedding",
+  "iframeEmbeddingTooltip": "Embed iframe to embed the conversation page of your bot into your website or application.",
+  "baseEmbeddingCode": "Base embedding code",
+  "copyCode": "Copy code",
+  "fullEmbeddingCode": "Full embedding code",
+  "sdkEmbedding": "Use SDK embedding",
+  "sdkEmbeddingTooltip": "Embed SDK to display a floating button in the bottom right corner of the page, which when clicked, opens the conversation window.",
+  "sdkEmbeddingCode": "SDK embedding code",
+  "apiEmbedding": "Use API embedding",
+  "apiEmbeddingTooltip": "Use API to integrate the bot's conversation capability into your application or service.",
+  "viewApiDoc": "View API documentation"
 }

@@ -1,9 +1,11 @@
+<!-- eslint-disable no-useless-escape -->
 <script setup lang="ts">
 import type { AiLlm, BotInfo } from '@aiflowy/types';
 
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { IconifyIcon } from '@aiflowy/icons';
 import { $t } from '@aiflowy/locales';
 import { useBotStore } from '@aiflowy/stores';
 
@@ -17,16 +19,19 @@ import {
   ElIcon,
   ElInput,
   ElInputNumber,
+  ElLink,
   ElMessage,
   ElRow,
   ElSelect,
   ElSlider,
+  ElSpace,
   ElSwitch,
 } from 'element-plus';
 import { tryit } from 'radash';
 
 import {
   getPerQuestions,
+  updateBotApi,
   updateBotOptions,
   updateLlmId,
   updateLlmOptions,
@@ -174,6 +179,7 @@ onMounted(async () => {
   getBotDetail();
   getLlmListData();
   getAiBotWikiList();
+  getUserCenterDomain();
 });
 
 const handleLlmChange = async (value: string) => {
@@ -505,6 +511,100 @@ const handleAddWiki = () => {
   wikiDataRef.value.openDialog(wikiIdsData.value);
 };
 // Wiki - end
+
+// iframe 嵌入代码
+const userCenterDomain = ref('');
+const iframeCode = computed(
+  () => `<iframe
+  src="${userCenterDomain.value}/#/iframe/chat?botId=${botId.value}"
+  width="100%"
+  height="100%"
+></iframe>`,
+);
+const iframeFullCode = computed(
+  () => `<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智能体对话</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe
+      src="${userCenterDomain.value}/#/iframe/chat?botId=${botId.value}"
+      width="100%"
+      height="100%"
+    ></iframe>
+  </body>
+</html>`,
+);
+
+function getUserCenterDomain() {
+  api.get('/api/v1/sysOption/list?keys=user_center_domain').then((res) => {
+    if (res.errorCode === 0 && res.data?.user_center_domain) {
+      userCenterDomain.value = res.data.user_center_domain;
+    }
+  });
+}
+
+// 发布到用户中心
+const publishToUserCenter = ref(0);
+const publishToUserCenterLoading = ref(false);
+
+async function togglePublishToUserCenter(status: number) {
+  publishToUserCenterLoading.value = true;
+
+  const [err, res] = await tryit(updateBotApi)({
+    id: botId.value,
+    status,
+  });
+
+  if (!err && res.errorCode === 0) {
+    ElMessage.success($t('message.updateOkMessage'));
+    publishToUserCenter.value = status;
+  }
+  publishToUserCenterLoading.value = false;
+}
+function openUserCenter() {
+  if (userCenterDomain.value.length > 0) {
+    window.open(
+      `${userCenterDomain.value}/#/chatAssistant?botId=${botId.value}`,
+      '_blank',
+    );
+  } else {
+    ElMessage.error($t('message.userCenterDomainNotSet'));
+  }
+}
+
+// SDK 嵌入代码
+const sdkCode = computed(
+  () => `<script src="https://cdn.jsdelivr.net/npm/@aiflowy/websdk/dist/index.js"><\/script>
+<script>
+  AiflowySDK.initAiflowy({
+    botId: "${botId.value}",
+    endpoint: "${userCenterDomain.value}"
+  });
+<\/script>`,
+);
+
+function copyCode(code: string) {
+  navigator.clipboard.writeText(code).then(() => {
+    ElMessage.success($t('bot.copiedToClipboard'));
+  });
+}
 </script>
 
 <template>
@@ -772,28 +872,28 @@ const handleAddWiki = () => {
             />
           </ElCollapseItem>
           <ElCollapseItem title="Wiki">
-                      <template #title>
-                        <div class="flex items-center justify-between pr-2">
-                          <span>Wiki</span>
-                          <div class="collapse-right-container">
-                            <span class="badge-circle">
-                              {{ wikiData.length }}
-                            </span>
-                            <span @click="handleAddWiki()">
-                              <ElIcon>
-                                <Plus />
-                              </ElIcon>
-                            </span>
-                          </div>
-                        </div>
-                      </template>
-                      <CollapseViewItem
-                        :data="wikiData"
-                        title-key="title"
-                        description-key="description"
-                        @delete="deleteWiki"
-                      />
-                    </ElCollapseItem>
+            <template #title>
+              <div class="flex items-center justify-between pr-2">
+                <span>Wiki</span>
+                <div class="collapse-right-container">
+                  <span class="badge-circle">
+                    {{ wikiData.length }}
+                  </span>
+                  <span @click="handleAddWiki()">
+                    <ElIcon>
+                      <Plus />
+                    </ElIcon>
+                  </span>
+                </div>
+              </div>
+            </template>
+            <CollapseViewItem
+              :data="wikiData"
+              title-key="title"
+              description-key="description"
+              @delete="deleteWiki"
+            />
+          </ElCollapseItem>
         </ElCollapse>
       </div>
     </div>
@@ -912,6 +1012,124 @@ const handleAddWiki = () => {
               </div>
             </div>
           </ElCollapseItem>
+          <ElCollapseItem :title="$t('bot.publishToUserCenter')">
+            <div class="publish-wx-container">
+              <div class="publish-wx">
+                <ElSpace>
+                  <span>{{ $t('bot.isPublished') }}</span>
+                  <ElSwitch
+                    :active-value="1"
+                    :inactive-value="0"
+                    :loading="publishToUserCenterLoading"
+                    :model-value="publishToUserCenter"
+                    @change="(val) => togglePublishToUserCenter(val as number)"
+                  />
+                </ElSpace>
+                <ElButton
+                  v-show="publishToUserCenter"
+                  link
+                  type="primary"
+                  @click="openUserCenter"
+                >
+                  {{ $t('bot.openUserCenter') }}
+                </ElButton>
+              </div>
+            </div>
+          </ElCollapseItem>
+          <ElCollapseItem :title="$t('bot.iframeEmbedding')">
+            <div class="publish-wx-container">
+              <div class="bg-background space-y-3 rounded-lg p-2">
+                <p class="text-muted-foreground text-sm">
+                  {{ $t('bot.iframeEmbeddingTooltip') }}
+                </p>
+
+                <div class="space-y-2">
+                  <div class="text-sm font-medium">
+                    {{ $t('bot.baseEmbeddingCode') }}
+                  </div>
+                  <ElInput
+                    type="textarea"
+                    :rows="4"
+                    readonly
+                    :model-value="iframeCode"
+                  />
+                  <ElButton
+                    type="primary"
+                    size="small"
+                    @click="copyCode(iframeCode)"
+                  >
+                    {{ $t('bot.copyCode') }}
+                  </ElButton>
+                </div>
+
+                <div class="space-y-2">
+                  <div class="text-sm font-medium">
+                    {{ $t('bot.fullEmbeddingCode') }}
+                  </div>
+                  <ElInput
+                    type="textarea"
+                    :rows="6"
+                    readonly
+                    :model-value="iframeFullCode"
+                  />
+                </div>
+              </div>
+            </div>
+          </ElCollapseItem>
+          <ElCollapseItem :title="$t('bot.sdkEmbedding')">
+            <div class="publish-wx-container">
+              <div class="bg-background space-y-3 rounded-lg p-2">
+                <p class="text-muted-foreground text-sm">
+                  {{ $t('bot.sdkEmbeddingTooltip') }}
+                </p>
+
+                <div class="space-y-2">
+                  <div class="text-sm font-medium">
+                    {{ $t('bot.sdkEmbeddingCode') }}
+                  </div>
+                  <ElInput
+                    type="textarea"
+                    :rows="8"
+                    readonly
+                    :model-value="sdkCode"
+                  />
+                  <ElButton
+                    type="primary"
+                    size="small"
+                    @click="copyCode(sdkCode)"
+                  >
+                    {{ $t('bot.copyCode') }}
+                  </ElButton>
+                </div>
+              </div>
+            </div>
+          </ElCollapseItem>
+          <ElCollapseItem :title="$t('bot.apiEmbedding')">
+            <div class="publish-wx-container">
+              <div class="bg-background space-y-3 rounded-lg p-2">
+                <p class="text-muted-foreground text-sm">
+                  {{ $t('bot.apiEmbeddingTooltip') }}
+                </p>
+                <ElSpace size="small">
+                  <span class="text-nowrap text-sm">{{
+                    $t('bot.viewApiDoc')
+                  }}</span>
+                  <ElLink
+                    href="https://api.aiflowy.tech/bot/chat"
+                    target="_blank"
+                    type="primary"
+                  >
+                    <ElSpace :size="4">
+                      https://api.aiflowy.tech/bot/chat
+                      <ElIcon>
+                        <IconifyIcon icon="svg:target" />
+                      </ElIcon>
+                    </ElSpace>
+                  </ElLink>
+                </ElSpace>
+              </div>
+            </div>
+          </ElCollapseItem>
         </ElCollapse>
       </div>
     </div>
@@ -961,12 +1179,12 @@ const handleAddWiki = () => {
     />
 
     <!-- 选择 Wiki -->
-        <WikiSelectModal
-          title="Wiki"
-          width="500"
-          ref="wikiDataRef"
-          @get-data="confirmUpdateAiBotWiki"
-        />
+    <WikiSelectModal
+      title="Wiki"
+      width="500"
+      ref="wikiDataRef"
+      @get-data="confirmUpdateAiBotWiki"
+    />
 
     <!--预设问题-->
     <ProblemPresupposition

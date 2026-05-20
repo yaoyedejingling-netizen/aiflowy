@@ -45,5 +45,6 @@
   "notAudio": "您的浏览器不支持 audio 元素。",
   "selectTip": "请选择数据",
   "mustBeNumber": "请输入有效的数字",
-  "confirmItem": "待确认项"
+  "confirmItem": "待确认项",
+  "userCenterDomainNotSet": "用户中心域名未设置"
 }

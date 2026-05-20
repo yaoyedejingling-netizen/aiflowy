@@ -40,7 +40,7 @@ export const saveBot = (params: SaveBotParams) => {
   return api.post<RequestResult>('/api/v1/bot/save', { ...params });
 };
 
-export interface UpdateBotParams extends SaveBotParams {
+export interface UpdateBotParams extends Partial<SaveBotParams> {
   id: string;
 }
 /** 修改Bot */

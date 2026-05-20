@@ -5,9 +5,10 @@ import type { BotInfo } from '@aiflowy/types';
 
 import type { ActionButton } from '#/components/page/CardList.vue';
 
-import { computed, markRaw, onMounted, ref } from 'vue';
+import { computed, h, markRaw, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
+import { IconifyIcon } from '@aiflowy/icons';
 import { $t } from '@aiflowy/locales';
 
 import { Delete, Edit, Plus, Setting } from '@element-plus/icons-vue';
@@ -50,6 +51,7 @@ interface FieldDefinition {
 onMounted(() => {
   initDict();
   getSideList();
+  getUserCenterDomain();
 });
 
 const router = useRouter();
@@ -68,6 +70,7 @@ const headerButtons = [
     permission: '/api/v1/documentCollection/save',
   },
 ];
+const userCenterDomain = ref('');
 const actions: ActionButton[] = [
   {
     icon: Edit,
@@ -88,6 +91,22 @@ const actions: ActionButton[] = [
     },
   },
   {
+    icon: h(IconifyIcon, { icon: 'svg:target' }),
+    text: $t('bot.openUserCenter'),
+    className: '',
+    permission: '',
+    onClick(row: BotInfo) {
+      if (userCenterDomain.value) {
+        window.open(
+          `${userCenterDomain.value}/#/chatAssistant?botId=${row.id}`,
+          '_blank',
+        );
+      } else {
+        ElMessage.error($t('message.userCenterDomainNotSet'));
+      }
+    },
+  },
+  {
     icon: Delete,
     text: $t('button.delete'),
     className: 'item-danger',
@@ -98,6 +117,13 @@ const actions: ActionButton[] = [
   },
 ];
 
+function getUserCenterDomain() {
+  api.get('/api/v1/sysOption/list?keys=user_center_domain').then((res) => {
+    if (res.errorCode === 0 && res.data?.user_center_domain) {
+      userCenterDomain.value = res.data.user_center_domain;
+    }
+  });
+}
 const removeBot = async (bot: BotInfo) => {
   const [action] = await tryit(ElMessageBox.confirm)(
     $t('message.deleteAlert'),
@@ -291,6 +317,7 @@ const getSideList = async () => {
               :default-icon="defaultAvatar"
               :data="pageList"
               :actions="actions"
+              :show-actions-len="2"
             />
           </template>
         </PageData>
