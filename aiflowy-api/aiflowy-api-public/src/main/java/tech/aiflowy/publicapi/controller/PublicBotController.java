@@ -1,6 +1,7 @@
 package tech.aiflowy.publicapi.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
+import com.agentsflex.core.message.Message;
 import com.agentsflex.core.message.UserMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +18,7 @@ import tech.aiflowy.system.entity.SysApiKey;
 import tech.aiflowy.system.service.SysApiKeyService;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * bot 接口
@@ -50,13 +52,24 @@ public class PublicBotController {
         if (!StringUtils.hasText(apikey)) {
            return ChatSseUtil.sendSystemError(null, "Apikey不能为空!");
         }
-        sysApiKeyService.checkApikeyPermission(apikey, requestURI);
-        BotServiceImpl.ChatCheckResult chatCheckResult = new BotServiceImpl.ChatCheckResult();
-        int size = chatRequestParams.getMessages().size();
-        String prompt = null;
-        if (chatRequestParams.getMessages().get(size - 1) instanceof UserMessage) {
-            prompt = ((UserMessage) chatRequestParams.getMessages().get(size - 1)).getContent();
+        if (chatRequestParams == null) {
+            return ChatSseUtil.sendSystemError(null, "请求参数不能为空!");
         }
+        sysApiKeyService.checkApikeyPermission(apikey, requestURI);
+
+        BotServiceImpl.ChatCheckResult chatCheckResult = new BotServiceImpl.ChatCheckResult();
+
+        List<Message> messages = chatRequestParams.getMessages();
+        if (messages == null || messages.isEmpty()) {
+            return ChatSseUtil.sendSystemError(null, "消息内容不能为空!");
+        }
+
+        Message lastMessage = messages.get(messages.size() - 1);
+        if (!(lastMessage instanceof UserMessage)) {
+            return ChatSseUtil.sendSystemError(null, "消息列表最后一条必须是用户消息!");
+        }
+
+        String prompt = ((UserMessage) lastMessage).getContent();
         // 前置校验：失败则直接返回错误SseEmitter
         SseEmitter errorEmitter = botService.checkChatBeforeStart(chatRequestParams.getBotId(), prompt, chatRequestParams.getConversationId(), chatCheckResult);
         if (errorEmitter != null) {
