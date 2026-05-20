@@ -1,13 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>aiflowy-ui-websdk</title>
+    <title>Aiflowy SDK 使用示例</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        min-height: 100vh;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <script src="./dist/index.js"></script>
+    <script>
+      AiflowySDK.initAiflowy({
+        botId: "399408307243270144",
+        endpoint: "http://ucpro.aiflowy.tech",
+      });
+    </script>
   </body>
 </html>

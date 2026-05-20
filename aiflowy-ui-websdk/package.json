@@ -1,18 +1,58 @@
 {
-  "name": "aiflowy-ui-websdk",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@aiflowy/websdk",
+  "version": "1.0.0",
+  "description": "Aiflowy AI Assistant Web SDK - Easily embed AI chat widgets into any website",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "unpkg": "dist/index.js",
+  "jsdelivr": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "type": "module",
+  "sideEffects": false,
+  "keywords": [
+    "aiflowy",
+    "ai-chat",
+    "chat-widget",
+    "sdk",
+    "iframe",
+    "ai-assistant",
+    "customer-service"
+  ],
+  "author": "Aiflowy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/aiflowy/aiflowy.git",
+    "directory": "aiflowy-ui-websdk"
+  },
+  "homepage": "https://gitee.com/aiflowy/aiflowy/tree/main/aiflowy-ui-websdk",
+  "bugs": {
+    "url": "https://gitee.com/aiflowy/aiflowy/issues"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "typescript": "~5.9.3",
-    "vite": "npm:rolldown-vite@7.2.5"
+    "@types/node": "^25.8.0",
+    "typescript": "~6.0.3",
+    "unplugin-dts": "^1.0.0",
+    "vite": "^8.0.13"
   },
-  "overrides": {
-    "vite": "npm:rolldown-vite@7.2.5"
-  }
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "packageManager": "pnpm@11.1.2"
 }
