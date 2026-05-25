@@ -1,3 +1,4 @@
+<div v-pre>
 # AIFlowy Docker 部署指南
 
 本文档提供了如何使用 `docker-compose` 快速部署 AIFlowy 全栈项目的详细步骤。
@@ -27,13 +28,13 @@ docker compose ps
 
 ## 3. 服务矩阵
 
-| 服务名称 | 访问地址 | 默认账号/密码 | 说明 |
-| :--- | :--- | :--- | :--- |
-| **管理后台 (Admin UI)** | [http://localhost:8081](http://localhost:8081) | admin / 123456 | 智能体、模型及系统管理 |
-| **用户中心 (User UI)** | [http://localhost:8082](http://localhost:8082) | admin / 123456 | 聊天、工作流执行界面 |
-| **后端 API** | [http://localhost:8080](http://localhost:8080) | - | 核心业务服务接口 |
-| **MySQL 数据库** | localhost:3306 | root / 123456 | 持久化存储 (数据库名: aiflowy) |
-| **Redis** | localhost:6379 | aiflowy_redis_2026 | 缓存与 Sa-Token 存储 |
+| 服务名称 | 访问地址                                           | 默认账号/密码 | 说明 |
+| :--- |:-----------------------------------------------| :--- | :--- |
+| **管理后台 (Admin UI)** | `http://localhost:8081`                        | admin / 123456 | 智能体、模型及系统管理 |
+| **用户中心 (User UI)** | `http://localhost:8082`                        | admin / 123456 | 聊天、工作流执行界面 |
+| **后端 API** | http://localhost:8080`                          | - | 核心业务服务接口 |
+| **MySQL 数据库** | localhost:3306                                 | root / 123456 | 持久化存储 (数据库名: aiflowy) |
+| **Redis** | localhost:6379                                 | aiflowy_redis_2026 | 缓存与 Sa-Token 存储 |
 
 ## 4. 关键配置说明
 
@@ -84,3 +85,5 @@ A: 这是因为 Nginx 缺少 `/userCenter/` 转发规则，当前版本的部署
 
 **Q: 菜单或数据出现中文乱码？**
 A: 请确保数据库初始化脚本首行包含 `SET NAMES utf8mb4;`，且连接字符串已带编码参数（本项目已默认配置）。
+
+</div>
