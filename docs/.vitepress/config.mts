@@ -202,9 +202,11 @@ function sidebarProduct(): DefaultTheme.SidebarItem[] {
             ],
         },
         {
-            text: "5分钟快速入门",
+            text: "快速开始",
             collapsed: false,
             items: [
+                {text: "安装部署", link: "quick-start/deploy"},
+                {text: "Docker 部署", link: "quick-start/docker"},
                 {text: "用户登录", link: "quick-start/login"},
                 {text: "修改密码", link: "quick-start/update-password"},
                 {text: "中英文切换", link: "quick-start/locales"},
@@ -316,7 +318,6 @@ function sidebarProduct(): DefaultTheme.SidebarItem[] {
                     items: [
                         {text: "什么是插件", link: "plugin/what_is_plugin"},
                         {text: "快速开始", link: "plugin/quick-start"},
-                        {text: "计划中", link: "plugin/other"},
                     ],
                 },
                 {
