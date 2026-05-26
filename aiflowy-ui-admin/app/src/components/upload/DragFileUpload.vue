@@ -18,6 +18,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  showFileList: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 const emit = defineEmits(['success', 'onChange']);
@@ -63,11 +67,12 @@ defineExpose({
     ref="uploadRef"
     class="upload-demo"
     drag
+    multiple
+    :show-file-list="showFileList"
     :headers="headers"
     :action="`${apiURL}${props.action}`"
     :on-success="handleSuccess"
     :on-change="handleChange"
-    multiple
     :style="{ display: props.visible ? 'block' : 'none' }"
   >
     <ElIcon size="48" color="hsl(var(--primary))">

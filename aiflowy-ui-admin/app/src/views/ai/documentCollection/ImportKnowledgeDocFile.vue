@@ -194,12 +194,12 @@ const finishImport = () => {
 <style scoped>
 .imp-doc-kno-container {
   position: relative;
-  height: 100%;
-  background-color: var(--el-bg-color);
-  border-radius: 12px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  padding: 20px;
+  background-color: var(--el-bg-color);
+  border-radius: 12px;
 }
 
 .imp-doc-kno-content {
@@ -207,46 +207,54 @@ const finishImport = () => {
   padding-top: 20px;
   overflow: auto;
 }
+
 .imp-doc-footer {
   position: absolute;
-  bottom: 20px;
   right: 20px;
+  bottom: 20px;
   display: flex;
-  height: 40px;
-  background-color: var(--el-bg-color);
   align-items: center;
   justify-content: flex-end;
+  height: 40px;
+  background-color: var(--el-bg-color);
 }
+
 .knw-file-preview {
   flex: 1;
   overflow: auto;
 }
+
 .imp-doc-page-container {
   margin-right: 12px;
 }
+
 .knw-file-confirm {
   width: 100%;
 }
 
 :deep(.el-step__head) {
-  --step-item-bg: rgba(0, 0, 0, 0.06);
-  --step-item-solid-bg: rgba(0, 0, 0, 0.15);
-  --accent-foreground: rgba(0, 0, 0, 0.45);
+  --step-item-bg: rgb(0 0 0 / 6%);
+  --step-item-solid-bg: rgb(0 0 0 / 15%);
+  --accent-foreground: rgb(0 0 0 / 45%);
 }
+
 :deep(.el-step__head:where(.dark, .dark *)) {
   --step-item-bg: var(--el-text-color-placeholder);
   --step-item-solid-bg: var(--el-text-color-placeholder);
   --accent-foreground: var(--primary-foreground);
 }
+
 :deep(.el-step__head.is-finish) {
   --step-item-bg: hsl(var(--primary));
   --step-item-solid-bg: hsl(var(--primary));
   --accent-foreground: var(--primary-foreground);
 }
+
 :deep(.el-step__icon.is-icon) {
   width: 120px;
   background-color: var(--table-header-bg-color);
 }
+
 :deep(.el-step__line) {
   background-color: var(--step-item-solid-bg);
 }

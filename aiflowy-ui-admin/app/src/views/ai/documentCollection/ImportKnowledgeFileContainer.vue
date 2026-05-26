@@ -61,7 +61,11 @@ function handleRemove(row: any) {
 <template>
   <div>
     <div>
-      <DragFileUpload @success="handleSuccess" @on-change="handleChange" />
+      <DragFileUpload
+        :show-file-list="false"
+        @success="handleSuccess"
+        @on-change="handleChange"
+      />
     </div>
     <div>
       <ElTable :data="fileData" style="width: 100%" size="large">

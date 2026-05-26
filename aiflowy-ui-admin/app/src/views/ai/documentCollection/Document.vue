@@ -171,87 +171,98 @@ const defaultSelectedMenu = ref('documentList');
 
 <style scoped>
 .document-container {
-  width: 100%;
   display: flex;
-  height: 100%;
-  padding: 24px 24px 30px 24px;
-}
-.doc-container {
-  height: 100%;
   width: 100%;
+  height: 100%;
+  padding: 24px 24px 30px;
+}
+
+.doc-container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
-}
-.doc-table-content {
-  border-radius: 8px;
   width: 100%;
-  box-sizing: border-box;
-  padding: 20px 14px 0 14px;
-  background-color: var(--el-bg-color);
-  flex: 1;
+  height: 100%;
 }
+
+.doc-table-content {
+  box-sizing: border-box;
+  flex: 1;
+  width: 100%;
+  padding: 20px 14px 0;
+  background-color: var(--el-bg-color);
+  border-radius: 8px;
+}
+
 .doc-header {
   width: 100%;
-  margin: 0 auto;
   padding-bottom: 21px;
+  margin: 0 auto;
 }
+
 .doc-content {
   display: flex;
   flex-direction: row;
-  height: 100%;
-  width: 100%;
   gap: 12px;
+  width: 100%;
+  height: 100%;
 }
 
 .doc-table {
   background-color: var(--el-bg-color);
 }
+
 .doc-imp-container {
+  box-sizing: border-box;
   flex: 1;
   width: 100%;
-  box-sizing: border-box;
 }
+
 .doc-header-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
+
 .doc-knowledge-container {
   display: flex;
   flex-direction: row;
+  gap: 8px;
   align-items: center;
   margin-bottom: 20px;
-  gap: 8px;
 }
+
 .knowledge-info-container {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
+
 .title {
-  font-weight: 500;
   font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
   line-height: 24px;
   text-align: left;
-  font-style: normal;
   text-transform: none;
 }
 
 .description {
-  font-weight: 400;
   font-size: 14px;
-  color: #75808d;
-  line-height: 22px;
-  text-align: left;
   font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  color: #75808d;
+  text-align: left;
   text-transform: none;
 }
+
 .doc-search-container {
+  display: flex;
   width: 100%;
   height: 100%;
-  display: flex;
 }
+
 .menu-container {
   flex: 1;
 }
