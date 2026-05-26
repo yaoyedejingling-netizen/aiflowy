@@ -217,10 +217,10 @@ function sidebarProduct(): DefaultTheme.SidebarItem[] {
             collapsed: false,
             items: [
                 {
-                    text: "聊天助手",
+                    text: "智能体",
                     collapsed: true,
                     items: [
-                        {text: "什么是聊天助手", link: "bot-application/what-is-a-bot"},
+                        {text: "什么是智能体", link: "bot-application/what-is-a-bot"},
                         {text: "快速开始", link: "bot-application/quick-start"},
                         {text: "挂载知识库", link: "bot-application/mount-knowledge"},
                         {text: "挂载插件", link: "bot-application/mount-plugins"},
@@ -230,7 +230,7 @@ function sidebarProduct(): DefaultTheme.SidebarItem[] {
                         //   text: "通过 ApiKey 请求 bot",
                         //   link: "bot-application/bot-api-key",
                         // },
-                        {text: "聊天助手接入微信公众号", link: "bot-application/wechat-mp"},
+                        {text: "智能体接入微信公众号", link: "bot-application/wechat-mp"},
                         {text: "Bot 集成与嵌入", link: "bot-application/bot-integration"},
                     ],
                 },
