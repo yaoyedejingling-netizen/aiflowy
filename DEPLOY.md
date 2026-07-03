@@ -47,7 +47,7 @@ docker compose ps
 - **重要**：如需修改转发规则，请编辑各前端目录下的 `scripts/deploy/nginx.conf`。
 
 ### 4.3 字符集优化
-- 已在 `docker-compose.yml` 环境参数中强制设置 `useUnicode=true&characterEncoding=utf-8` 以防止中文乱码。
+- 已在 `docker-compose.yml` 环境参数中强制设置 `useUnicode=true&characterEncoding=utf-8&rewriteBatchedStatements=true` 以防止中文乱码。
 
 ### 4.4 API 网关配置
 - 前端服务的 `VITE_GLOB_API_URL` 应留空，由 Nginx 代理转发至后端 API。

@@ -59,7 +59,7 @@ AIFlowy 采用现代化技术栈，需确保您的开发环境满足以下要求
 ```yaml
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8&rewriteBatchedStatements=true
     username: root
     password: 123456
 ```

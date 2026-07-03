@@ -13,7 +13,7 @@ public class AIModuleGen {
         HikariDataSource dataSource = new HikariDataSource();
 
         //注意：url 需添加上 useInformationSchema=true 才能正常获取表的注释
-        dataSource.setJdbcUrl("jdbc:mysql://192.168.2.10:3306/aiflowy-v2?useInformationSchema=true&characterEncoding=utf-8");
+        dataSource.setJdbcUrl("jdbc:mysql://192.168.2.10:3306/aiflowy-v2?useInformationSchema=true&characterEncoding=utf-8&rewriteBatchedStatements=true");
         dataSource.setUsername("root");
         dataSource.setPassword("123456");
 

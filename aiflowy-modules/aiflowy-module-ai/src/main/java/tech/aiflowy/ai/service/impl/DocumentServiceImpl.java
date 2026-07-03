@@ -245,16 +245,23 @@ public class DocumentServiceImpl extends ServiceImpl<DocumentMapper, Document> i
     public Result<?> saveTextResult(List<DocumentChunk> documentChunks, Document document) {
         Boolean result = storeDocument(document, documentChunks);
         if (result) {
-            this.getMapper().insert(document);
-            AtomicInteger sort = new AtomicInteger(1);
-            documentChunks.forEach(item -> {
-                item.setDocumentCollectionId(document.getCollectionId());
-                item.setSorting(sort.get());
-                item.setDocumentId(document.getId());
-                sort.getAndIncrement();
-                documentChunkService.save(item);
-            });
-            return Result.ok();
+            if(cn.hutool.core.collection.CollectionUtil.isNotEmpty(documentChunks)){
+                AtomicInteger sort = new AtomicInteger(1);
+                List<DocumentChunk> list=new ArrayList<>();
+                documentChunks.forEach(item -> {
+                    item.setDocumentCollectionId(document.getCollectionId());
+                    item.setSorting(sort.get());
+                    item.setDocumentId(document.getId());
+                    sort.getAndIncrement();
+                    list.add(item);
+                });
+                boolean saveResult=documentChunkService.saveBatch(list);
+                if (saveResult){
+                    return Result.ok();
+                }else {
+                    return Result.fail(1, "保存documentChunk失败");
+                }
+            }
         }
         return Result.fail(1, "保存失败");
     }

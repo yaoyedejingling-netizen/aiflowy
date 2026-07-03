@@ -18,7 +18,7 @@ spring:
     active: dev
   datasource:
     # ！！！ 注意：useInformationSchema=true 是必须的，用于支持 MyBatis-Flex 正确读取表注释。
-    url: jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8&rewriteBatchedStatements=true
     username: root
     password: 123456
   servlet:

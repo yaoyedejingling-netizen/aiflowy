@@ -31,7 +31,7 @@
 
 | 类型 | 标识 | 默认 JDBC URL 格式 | 默认端口 |
 |-----|------|-------------------|---------|
-| MySQL | 0 | `jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8` | 3306 |
+| MySQL | 0 | `jdbc:mysql://127.0.0.1:3306/aiflowy?useInformationSchema=true&characterEncoding=utf-8&rewriteBatchedStatements=true` | 3306 |
 | Oracle | 1 | `jdbc:oracle:thin:@//127.0.0.1:1521/aiflowy` | 1521 |
 | SQL Server | 2 | `jdbc:sqlserver://127.0.0.1:1433;databaseName=aiflowy;encrypt=false` | 1433 |
 | PostgreSQL | 3 | `jdbc:postgresql://127.0.0.1:5432/aiflowy` | 5432 |
@@ -107,7 +107,7 @@
 
 **MySQL 示例**:
 ```
-jdbc:mysql://192.168.1.100:3306/mydb?useInformationSchema=true&characterEncoding=utf-8
+jdbc:mysql://192.168.1.100:3306/mydb?useInformationSchema=true&characterEncoding=utf-8&rewriteBatchedStatements=true
 ```
 
 **PostgreSQL 示例**:
